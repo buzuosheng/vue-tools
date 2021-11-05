@@ -1,5 +1,6 @@
 <template>
-  <div class="flex flex-col items-center overflow-hidden justify-start">
+  <Base64 />
+  <!-- <div class="flex flex-col items-center overflow-hidden justify-start">
     <Header />
     <div
       class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:mx-32 my-4 gap-4"
@@ -29,7 +30,7 @@
       <Card />
     </div>
     <Footer />
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
@@ -37,12 +38,14 @@ import { defineComponent } from '@vue/runtime-core'
 import Header from './components/Header.vue'
 import Card from './components/Card.vue'
 import Footer from './components/Footer.vue'
+import Base64 from './components/Base64.vue'
 export default defineComponent({
   name: 'App',
   components: {
     Header,
     Card,
-    Footer
+    Footer,
+    Base64
   }
 })
 </script>

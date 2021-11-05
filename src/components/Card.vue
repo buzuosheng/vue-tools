@@ -58,18 +58,17 @@ interface CardProps {
 
 export default defineComponent({
   name: 'Card',
-  props: ['title', 'img', 'desc'],
-  // {
-  //   title: { type: String, default: 'Default title' },
-  //   img: {
-  //     type: String,
-  //     default: 'Default image'
-  //   },
-  //   desc: {
-  //     type: String,
-  //     default: 'Default description'
-  //   }
-  // },
+  props: {
+    title: { type: String, default: 'Default title' },
+    img: {
+      type: String,
+      default: 'Default image'
+    },
+    desc: {
+      type: String,
+      default: 'Default description'
+    }
+  },
   setup(props: CardProps) {
     let { title, img, desc } = toRefs(props)
     return {
