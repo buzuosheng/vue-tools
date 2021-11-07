@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core'
-const reg = /\.|\?|\!/
+const reg = /\. |\? |\! /
 
 export default defineComponent({
   name: 'Statistics',

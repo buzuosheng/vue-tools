@@ -44,7 +44,7 @@
               mt-2
               bg-gray-200
             "
-            >{{ encode }}</textarea
+            >{{ isEncodeMode ? encode : decode }}</textarea
           >
         </div>
         <div class="my-8 flex sm:flex-row flex-col items-center justify-center">
@@ -82,6 +82,7 @@
               active:bg-green-600
               focus:outline-none
             "
+            @click="copyCode()"
           >
             Copy
           </button>
@@ -99,8 +100,9 @@
               active:bg-green-600
               focus:outline-none
             "
+            @click="codeChange"
           >
-            Decode
+            {{ isEncodeMode ? 'Decode' : 'Encode' }}
           </button>
         </div>
       </div>
@@ -116,10 +118,10 @@
 import { defineComponent } from '@vue/runtime-core'
 import { computed, ref } from '@vue/reactivity'
 import base64 from 'base64-js'
-import copy from 'copy-to-clipboard'
 import Header from './Header.vue'
 import Footer from './Footer.vue'
 import Statistics from './StatisticsVue.vue'
+
 // 编码 string转unit8,再使用过base64.frombytearray()转成base64
 const stringToUint8Array = (str: string) => {
   const arr = Array.from(str, (char) => char.charCodeAt(0))
@@ -139,11 +141,6 @@ function Uint8ArrayToString(fileData: Uint8Array) {
 
 export default defineComponent({
   name: 'Base64',
-  data() {
-    return {
-      text: ''
-    }
-  },
   components: {
     Header,
     Statistics,
@@ -151,13 +148,31 @@ export default defineComponent({
   },
   setup() {
     const text = ref('')
-    const encode = computed(() =>
-      base64.fromByteArray(stringToUint8Array(text.value))
-    )
-    console.log(text)
+    const isEncodeMode = ref(true)
+    const encode = computed(() => {
+      return (
+        base64.fromByteArray(stringToUint8Array(text.value)) ||
+        'Encoded text will appear here..'
+      )
+    })
+    const decode = computed(() => {
+      try {
+        return text.value
+          ? Uint8ArrayToString(base64.toByteArray(text.value))
+          : 'Encoded text will appear here..'
+      } catch (error: any) {
+        return error.message.split('.')[1]
+      }
+    })
+    const copyCode = () => navigator.clipboard.writeText(encode.value)
+    const codeChange = () => {isEncodeMode.value =!isEncodeMode.value}
     return {
       text,
-      encode
+      encode,
+      copyCode,
+      decode,
+      codeChange,
+      isEncodeMode
     }
   }
 })
