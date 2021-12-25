@@ -139,6 +139,8 @@ function Uint8ArrayToString(fileData: Uint8Array) {
   return dataString
 }
 
+
+
 export default defineComponent({
   name: 'Base64',
   components: {
@@ -164,8 +166,12 @@ export default defineComponent({
         return error.message.split('.')[1]
       }
     })
-    const copyCode = () => navigator.clipboard.writeText(encode.value)
-    const codeChange = () => {isEncodeMode.value =!isEncodeMode.value}
+    const copyCode = () => {
+      navigator.clipboard.writeText(encode.value)
+    }
+    const codeChange = () => {
+      isEncodeMode.value = !isEncodeMode.value
+    }
     return {
       text,
       encode,
